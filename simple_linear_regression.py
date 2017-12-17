@@ -10,6 +10,14 @@ dataset = pd.read_csv('Salary_Data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, 1].values
 
+
+#taking care of missing data
+#substitue missing value with the mean
+"""from sklearn.preprocessing import Imputer
+imputer = Imputer(missing_values='NaN',strategy='mean',axis=0)
+imputer = imputer.fit(X[:,0:1])
+X[:,0:1] = imputer.transform(X[:,0:1]);"""
+
 # Splitting the dataset into the Training set and Test set
 from sklearn.cross_validation import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 1/3, random_state = 0)
@@ -30,6 +38,11 @@ regressor.fit(X_train, y_train)
 # Predicting the Test set results
 y_pred = regressor.predict(X_test)
 
+
+print(regressor.predict([[20.5]])[0])
+
+
+
 # Visualising the Training set results
 plt.scatter(X_train, y_train, color = 'red')
 plt.plot(X_train, regressor.predict(X_train), color = 'blue')
@@ -45,3 +58,27 @@ plt.title('Salary vs Experience (Test set)')
 plt.xlabel('Years of Experience')
 plt.ylabel('Salary')
 plt.show()
+
+
+"""import pickle 
+filename = 'finalized_model.sav'
+pickle.dump(regressor, open(filename, 'wb'))
+
+ 
+# load the model from disk
+loaded_model = pickle.load(open(filename, 'rb'))
+result = loaded_model.score(X_test, y_test)
+print(result)"""
+
+
+
+
+
+
+
+
+
+
+
+
+
